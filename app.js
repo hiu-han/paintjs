@@ -1,5 +1,9 @@
 const canvas =  document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
+const colors = document.getElementsByClassName("jsColor");
+// getElementsByClassName으로 받으면 HTMLElement??로 받아와서 Array.from에 넣어서 배열로 만들어줘야하는데,
+// querySelectorAll로 받아오면 바로 배열로 출력해준다는 회원의 얘기가 있다.
+
 // canvas.width = 700;
 // canvas.height = 700;
 // 혹은 캔버스에 선 그릴때 이상하게 그려지면
@@ -50,6 +54,13 @@ function onMouseMove(event) {
 //   stopPainting();
 // }
 
+function handleColorClick(event) {
+  // console.log(event.target.style);
+  const color = event.target.style.backgroundColor;
+  console.log(color);
+  ctx.strokeStyle = color;
+}
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   // canvas.addEventListener("mousedown", onMouseDown);
@@ -59,3 +70,7 @@ if (canvas) {
   // canvas.addEventListener("mouseleave", onMouseLeave);
   canvas.addEventListener("mouseleave", stopPainting);
 }
+
+Array.from(colors).forEach(color => color.addEventListener("click", handleColorClick));
+
+console.log(Array.from(colors));
