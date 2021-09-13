@@ -1,6 +1,8 @@
 const canvas =  document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("jsColor");
+const range = document.getElementById("jsRange");
+const mode = document.getElementById("jsMode");
 // getElementsByClassName으로 받으면 HTMLElement??로 받아와서 Array.from에 넣어서 배열로 만들어줘야하는데,
 // querySelectorAll로 받아오면 바로 배열로 출력해준다는 회원의 얘기가 있다.
 
@@ -16,6 +18,7 @@ ctx.strokeStyle = "#2c2c2c";
 ctx.lineWidth = 2.5;
 
 let painting = false;
+let filling = false;
 
 function stopPainting() {
   painting = false;
@@ -61,6 +64,23 @@ function handleColorClick(event) {
   ctx.strokeStyle = color;
 }
 
+function handleRangeChange(event) {
+  // console.log(event);
+  // console.log(event.target.value);
+  const size = event.target.value;
+  ctx.lineWidth = size;
+}
+
+function handleModeClick() {
+  if(filling === true) {
+    filling = false;
+    mode.innerText = "FILL";
+  } else {
+    filling = true;
+    mode.innerText = "PAINT";
+  }
+}
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   // canvas.addEventListener("mousedown", onMouseDown);
@@ -72,5 +92,12 @@ if (canvas) {
 }
 
 Array.from(colors).forEach(color => color.addEventListener("click", handleColorClick));
-
 console.log(Array.from(colors));
+
+if (range) {
+  range.addEventListener("input", handleRangeChange);
+}
+
+if (mode) {
+  mode.addEventListener("click", handleModeClick);
+}
